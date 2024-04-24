@@ -118,7 +118,9 @@ housing_tr["population_per_household"] = (
 )
 
 housing_cat = housing[["ocean_proximity"]]
-housing_prepared = housing_tr.join(pd.get_dummies(housing_cat, drop_first=True))
+housing_prepared = housing_tr.join(pd.get_dummies(
+                                    housing_cat, drop_first=True)
+                                   )
 
 
 lin_reg = LinearRegression()
@@ -214,7 +216,9 @@ X_test_prepared["population_per_household"] = (
 )
 
 X_test_cat = X_test[["ocean_proximity"]]
-X_test_prepared = X_test_prepared.join(pd.get_dummies(X_test_cat, drop_first=True))
+X_test_prepared = X_test_prepared.join(pd.get_dummies(
+                    X_test_cat, drop_first=True)
+                )
 
 
 final_predictions = final_model.predict(X_test_prepared)
