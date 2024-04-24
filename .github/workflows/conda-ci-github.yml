@@ -24,5 +24,4 @@ jobs:
         conda list
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
-    -name : Run python file
-      run: python mle-training/nonstandardcode.py
+    - run: python mle-training/nonstandardcode.py
