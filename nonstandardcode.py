@@ -3,8 +3,6 @@ from __future__ import annotations
 import os
 import tarfile
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.stats import randint
@@ -86,9 +84,12 @@ housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
 
 corr_matrix = housing.corr()
 corr_matrix["median_house_value"].sort_values(ascending=False)
-housing["rooms_per_household"] = housing["total_rooms"] / housing["households"]
-housing["bedrooms_per_room"] = housing["total_bedrooms"] / housing["total_rooms"]
-housing["population_per_household"] = housing["population"] / housing["households"]
+housing["rooms_per_household"] = housing["total_rooms"] / \
+                                 housing["households"]
+housing["bedrooms_per_room"] = housing["total_bedrooms"] / \
+                               housing["total_rooms"]
+housing["population_per_household"] = housing["population"] / \
+                                      housing["households"]
 
 # drop labels for training set
 housing = strat_train_set.drop("median_house_value", axis=1)
@@ -107,7 +108,8 @@ housing_tr = pd.DataFrame(
     columns=housing_num.columns,
     index=housing.index,
 )
-housing_tr["rooms_per_household"] = housing_tr["total_rooms"] / housing_tr["households"]
+housing_tr["rooms_per_household"] = housing_tr["total_rooms"] / \
+                                    housing_tr["households"]
 housing_tr["bedrooms_per_room"] = (
     housing_tr["total_bedrooms"] / housing_tr["total_rooms"]
 )
