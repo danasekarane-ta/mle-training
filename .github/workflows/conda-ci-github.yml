@@ -1,0 +1,25 @@
+name: Python Contious Integration using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    name: Continous integration with Conda
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Miniconda
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: anaconda-client-env
+        python-version: '3.10'
+        environment-file: etc/env.yml
+        condarc-file: etc/.condarc
+        auto-activate-base: false
+    - run:
+        conda info
+        conda list
