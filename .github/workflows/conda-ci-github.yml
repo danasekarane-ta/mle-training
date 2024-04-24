@@ -19,9 +19,6 @@ jobs:
         environment-file: etc/env.yml
         condarc-file: etc/.condarc
         auto-activate-base: false
-    - run:
-        conda info
-        conda list
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
     - run: python nonstandardcode.py
