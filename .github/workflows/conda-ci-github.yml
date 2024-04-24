@@ -22,3 +22,5 @@ jobs:
     - run:
         conda info
         conda list
+    - name: Flak38 lint
+      uses:  py-actions/flake8@v2
