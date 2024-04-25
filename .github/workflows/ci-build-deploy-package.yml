@@ -43,6 +43,6 @@ jobs:
         pip install wheel
         pip install NonStandardPyDan-1.0-py3-none-any.whl
     - name: Extract the wheel file content
-      run: python -m wheel unack -d dist/NonStandardPyDan-1.0-py3-none-any.whl
+      run: python -m wheel unpack -d dist/NonStandardPyDan-1.0-py3-none-any.whl
     - name: Run the python script
-      run: python nonstandardcode.py
+      run: python dist/nonstandardcode.py
