@@ -21,4 +21,11 @@ jobs:
         auto-activate-base: false
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
-    - run: python nonstandardcode.py
+    - name: Install tree client
+      run: sudo apt install tree
+    - name: Show the current folder structure
+      run: tree .
+    - name: Package the file
+      run: python setup.py sdist bdist_wheel
+    - name: Show the tree after packaging
+      run: tree .
