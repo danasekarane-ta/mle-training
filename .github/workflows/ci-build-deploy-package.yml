@@ -36,17 +36,17 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
          name: upload_wheel_artifact
-         path: dist/NonStandardPyDan-1.0-py3-none-any.whl
+         path: dist/
     - name: Download the artifacts
       uses: actions/download-artifact@v4
       with:
         name: upload_wheel_artifact
     - name: Install the artifacts
       run: |
-        pip install NonStandardPyDan-1.0-py3-none-any.whl
+        pip install *.whl
     - name: Show the tree of the exacted file
       run: tree .
     - name: Show the installed packages
       run: pip freeze
     - name: Run the Python file
-      run: python -m NonStandardPyDan.nonstandardcode
+      run: python -m housingPricePrediction.nonstandardcode
