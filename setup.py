@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 VERSION = '0.0.1'
 DESCRIPTION = 'House Price Prediction'
-LONG_DESCRIPTION = 'Housign Price Prediction Module'
+LONG_DESCRIPTION = 'Housing Price Prediction Module'
 
 # Setting up
 setup(
