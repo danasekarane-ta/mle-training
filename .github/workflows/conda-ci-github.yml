@@ -1,0 +1,24 @@
+name: Python Contious Integration using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    name: Continous integration with Conda
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: myenv
+        python-version: '3.12.2'
+        environment-file: etc/env.yml
+        condarc-file: etc/.condarc
+        auto-activate-base: false
+    - name: Flak38 lint
+      uses:  py-actions/flake8@v2
+    - run: python nonstandardcode.py
