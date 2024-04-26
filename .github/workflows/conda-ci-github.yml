@@ -17,7 +17,7 @@ jobs:
         activate-environment: myenv
         python-version: '3.12.2'
         environment-file: deploy/env.yml
-        condarc-file: etc/.condarc
+        condarc-file: deploy/.condarc
         auto-activate-base: false
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
