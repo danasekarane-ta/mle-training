@@ -26,7 +26,10 @@ jobs:
     - name: Show the current folder structure
       run: tree .
     - name: Package the file
-      run: python setup.py sdist bdist_wheel
+      run: |
+           pip install --upgrade setuptools
+           pip install --upgrade build
+           python -m build
     - name: Show the tree after packaging
       run: tree .
     - name: Upload the build artifactory
@@ -40,7 +43,6 @@ jobs:
         name: upload_wheel_artifact
     - name: Install the artifacts
       run: |
-        pip install wheel
         pip install NonStandardPyDan-1.0-py3-none-any.whl
     - name: Show the tree of the exacted file
       run: tree .
