@@ -21,4 +21,4 @@ jobs:
         auto-activate-base: false
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
-    - run: python src/nonstandardcode.py
+    - run: python src/housingPricingPrediction/nonstandardcode.py
