@@ -45,4 +45,4 @@ jobs:
     - name: Show the tree of the exacted file
       run: tree .
     - name: Run the Python file
-      run: python NonStandardPyDan.nonstandardcode
+      run: python -m NonStandardPyDan.nonstandardcode
