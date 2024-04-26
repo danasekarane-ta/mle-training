@@ -45,7 +45,7 @@ jobs:
     - name: Show the tree of the exacted file
       run: tree .
     - name: Extract the wheel file content
-      run: python -m wheel unpack -d NonStandardPyDan-1.0-py3-none-any.whl
+      run: python -m wheel unpack -d ./NonStandardPyDan-1.0-py3-none-any.whl
     - name: Show the extracted file
       run: tree .
     
