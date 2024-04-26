@@ -1,0 +1,52 @@
+name: Python Contious Integration and Deployment using Conda
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    name: Continous integration with Conda
+    defaults:
+      run:
+        shell: bash -el {0}
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: conda-incubator/setup-miniconda@v3
+      with:
+        activate-environment: myenv
+        python-version: '3.12.2'
+        environment-file: etc/env.yml
+        condarc-file: etc/.condarc
+        auto-activate-base: false
+    - name: Flak38 lint
+      uses:  py-actions/flake8@v2
+    - name: Install tree client
+      run: sudo apt install tree
+    - name: Show the current folder structure
+      run: tree .
+    - name: Package the file
+      run: |
+           pip install --upgrade setuptools
+           pip install --upgrade build
+           python -m build
+    - name: Show the tree after packaging
+      run: tree .
+    - name: Upload the build artifactory
+      uses: actions/upload-artifact@v4
+      with:
+         name: upload_wheel_artifact
+         path: dist/
+    - name: Download the artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: upload_wheel_artifact
+    - name: Install the artifacts
+      run: |
+        pip install *.whl
+    - name: Show the tree of the exacted file
+      run: tree .
+    - name: Show the installed packages
+      run: pip freeze
+    - name: Run the Python file
+      run: python -m housingPricePrediction.nonstandardcode
