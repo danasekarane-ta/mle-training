@@ -44,5 +44,7 @@ jobs:
         pip install NonStandardPyDan-1.0-py3-none-any.whl
     - name: Show the tree of the exacted file
       run: tree .
+    - name: Show the installed packages
+      run: pip freeze
     - name: Run the Python file
-      run: python -m NonStandardPyDan.nonstandardcode
+      run: python -m nonstandardpydan.nonstandardcode
