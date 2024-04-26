@@ -14,8 +14,7 @@ setup(
     description="Simple Package",
     long_description="Long Package",
     packages=find_packages(),
-    install_requires=['bs4', 'numpy', 'pandas', 'scikit-learn'],  # add any additional packages that
-    # needs to be installed along with your package. Eg: 'caer'
+    install_requires=['bs4', 'numpy', 'pandas', 'scikit-learn'],
 
     keywords=['python', 'non standard code'],
     classifiers=[
