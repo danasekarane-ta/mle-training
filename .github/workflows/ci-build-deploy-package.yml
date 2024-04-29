@@ -49,4 +49,5 @@ jobs:
     - name: Show the installed packages
       run: pip freeze
     - name: Run the Python file
-      run: python -m housingPricePrediction.nonstandardcode
+      run: python -m prediction.py
+.
