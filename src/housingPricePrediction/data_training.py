@@ -9,7 +9,7 @@ from sklearn.model_selection import (
     train_test_split,
 )
 from sklearn.tree import DecisionTreeRegressor
-from const import LINEAR_MODEL, DECESSION_TREE
+from housingPricePrediction.const import LINEAR_MODEL, DECESSION_TREE
 
 
 def stratifiedShuffleSplit(housing):
