@@ -50,4 +50,3 @@ jobs:
       run: pip freeze
     - name: Run the Python file
       run: python -m prediction
-.
