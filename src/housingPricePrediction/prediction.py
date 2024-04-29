@@ -1,4 +1,4 @@
-from . import data_ingestion, data_training, scoring_logic
+from . import data_ingestion, data_training, logic_score
 
 
 def data_prediction():
@@ -52,14 +52,14 @@ def data_prediction():
         "linear", housing_X_train, housing_y_train
     )
 
-    lin_rmse_train, lin_mae_train = scoring_logic.scoring_logic(
+    lin_rmse_train, lin_mae_train = logic_score.logic_score(
         housing_y_train, housing_predictions_lin
     )
 
     housing_predictions_reg = data_training.train_data_regression(
         "DecessionTree", housing_X_train, housing_y_train
     )
-    tree_rmse_train, tree_mae_train = scoring_logic.scoring_logic(
+    tree_rmse_train, tree_mae_train = logic_score.logic_score(
         housing_y_train, housing_predictions_reg
     )
     final_model_train_random = data_training.cross_validation(
@@ -74,7 +74,7 @@ def data_prediction():
     print("Best Estimator", final_model_train_grid)
 
     final_predictions_train = final_model_train_grid.predict(housing_X_train)
-    final_rmse_train, final_mae_train = scoring_logic.scoring_logic(
+    final_rmse_train, final_mae_train = logic_score.logic_score(
         housing_y_train, final_predictions_train
     )
     # scoring for train set
@@ -83,7 +83,7 @@ def data_prediction():
 
     # test using trained models
     final_predictions_test = final_model_train_grid.predict(housing_X_test)
-    final_rmse_test, final_mae_test = scoring_logic.scoring_logic(
+    final_rmse_test, final_mae_test = logic_score.logic_score(
         housing_y_test, final_predictions_test
     )
     # scoring for test set
