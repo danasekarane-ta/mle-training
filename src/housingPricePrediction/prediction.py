@@ -15,7 +15,7 @@ def data_prediction():
     )
 
     # preprocess_data
-    compare_props = data_ingestion.preprocess_data(
+    data_ingestion.preprocess_data(
         housing, strat_train_set, strat_test_set, test_set
     )
 
@@ -31,9 +31,7 @@ def data_prediction():
 
     # Feature Extraction for train set
     housing_train, housing_y_train, housing_X_train = \
-        data_ingestion.impute_data(
-            strat_train_set
-    )
+        data_ingestion.impute_data(strat_train_set)
 
     housing_X_train = data_ingestion.extract_features(housing_X_train)
     housing_X_train = data_ingestion.create_dummy_data(
