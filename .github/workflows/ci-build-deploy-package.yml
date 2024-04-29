@@ -49,5 +49,5 @@ jobs:
     - name: Show the installed packages
       run: pip freeze
     - name: Run the Python file
-      run: python -m prediction.py
+      run: python -m prediction
 .

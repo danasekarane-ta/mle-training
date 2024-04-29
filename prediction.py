@@ -1,4 +1,4 @@
-from housingPricePrediction import data_ingestion, data_training, logic_score
+from src.housingPricePrediction import data_ingestion, data_training, logic_score
 
 
 def data_prediction():
