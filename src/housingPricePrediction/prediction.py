@@ -84,9 +84,11 @@ def data_prediction():
         housing_y_train
     )
     print("Best Estimator", final_model_train_random)
-    final_model_train_grid = cross_validation('GridSearchCV',
-                                                            housing_X_train,
-                                                            housing_y_train)
+    final_model_train_grid = cross_validation(
+        'GridSearchCV',
+        housing_X_train,
+        housing_y_train
+    )
     print("Best Estimator", final_model_train_grid)
 
     final_predictions_train = final_model_train_grid.predict(housing_X_train)
