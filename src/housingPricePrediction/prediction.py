@@ -1,80 +1,96 @@
-from housingPricePrediction import data_ingestion, data_training, logic_score
+from .data_ingestion import (
+    load_housing_data,
+    fetch_housing_data,
+    preprocess_data,
+    data_visualization,
+    impute_data,
+    extract_features,
+    create_dummy_data,
+
+)
+from .data_training import (
+    stratifiedShuffleSplit,
+    train_data_regression,
+    cross_validation
+)
+from .logic_score import calculate_score
 
 
 def data_prediction():
     """ Fetch the data and Predict the modelling
     """
     # Fetch the data
-    data_ingestion.fetch_housing_data()
+    fetch_housing_data()
     # Load the fetched data
-    housing = data_ingestion.load_housing_data()
+    housing = load_housing_data()
 
     # train the data
     train_set, test_set, strat_train_set, strat_test_set = (
-        data_training.stratifiedShuffleSplit(housing)
+        stratifiedShuffleSplit(housing)
     )
 
     # preprocess_data
-    data_ingestion.preprocess_data(
+    preprocess_data(
         housing, strat_train_set, strat_test_set, test_set
     )
 
     # Data Visualiztion for train set
     housing_train = strat_train_set.copy()
     print("Data Visualization for train set")
-    data_ingestion.data_visualization(housing_train)
+    data_visualization(housing_train)
 
     # Data Visualiztion for test set
     housing_test = strat_train_set.copy()
     print("Data Visualization for test set")
-    data_ingestion.data_visualization(housing_test)
+    data_visualization(housing_test)
 
     # Feature Extraction for train set
-    housing_train, housing_y_train, housing_X_train = \
-        data_ingestion.impute_data(strat_train_set)
+    housing_train, housing_y_train, housing_X_train = impute_data(
+        strat_train_set
+    )
 
-    housing_X_train = data_ingestion.extract_features(housing_X_train)
-    housing_X_train = data_ingestion.create_dummy_data(
+    housing_X_train = extract_features(housing_X_train)
+    housing_X_train = create_dummy_data(
         housing_train, housing_X_train
     )
     # Feature Extraction for test set
-    housing_test, housing_y_test, housing_X_test = data_ingestion.impute_data(
+    housing_test, housing_y_test, housing_X_test = impute_data(
         strat_test_set
     )
-    housing_X_test = data_ingestion.extract_features(housing_X_test)
-    housing_X_test = data_ingestion.create_dummy_data(
+    housing_X_test = extract_features(housing_X_test)
+    housing_X_test = create_dummy_data(
         housing_test,
         housing_X_test
     )
 
     # train model for training set
-    housing_predictions_lin = data_training.train_data_regression(
+    housing_predictions_lin = train_data_regression(
         "linear", housing_X_train, housing_y_train
     )
 
-    lin_rmse_train, lin_mae_train = logic_score.logic_score(
+    lin_rmse_train, lin_mae_train = calculate_score(
         housing_y_train, housing_predictions_lin
     )
 
-    housing_predictions_reg = data_training.train_data_regression(
+    housing_predictions_reg = train_data_regression(
         "DecessionTree", housing_X_train, housing_y_train
     )
-    tree_rmse_train, tree_mae_train = logic_score.logic_score(
+    tree_rmse_train, tree_mae_train = calculate_score(
         housing_y_train, housing_predictions_reg
     )
-    final_model_train_random = data_training.cross_validation(
+    final_model_train_random = cross_validation(
         'RandomizedSearchCV',
         housing_X_train,
         housing_y_train
     )
     print("Best Estimator", final_model_train_random)
-    final_model_train_grid = data_training.cross_validation('GridSearchCV',
+    final_model_train_grid = cross_validation('GridSearchCV',
                                                             housing_X_train,
                                                             housing_y_train)
     print("Best Estimator", final_model_train_grid)
 
     final_predictions_train = final_model_train_grid.predict(housing_X_train)
-    final_rmse_train, final_mae_train = logic_score.logic_score(
+    final_rmse_train, final_mae_train = calculate_score(
         housing_y_train, final_predictions_train
     )
     # scoring for train set
@@ -83,7 +99,7 @@ def data_prediction():
 
     # test using trained models
     final_predictions_test = final_model_train_grid.predict(housing_X_test)
-    final_rmse_test, final_mae_test = logic_score.logic_score(
+    final_rmse_test, final_mae_test = calculate_score(
         housing_y_test, final_predictions_test
     )
     # scoring for test set
