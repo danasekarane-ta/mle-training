@@ -3,7 +3,6 @@ name: Build the module locally and test it and see if it fails
 on:
   push:
     branches:
-      - main
       - fix/15/unit-testing
 
 jobs:
