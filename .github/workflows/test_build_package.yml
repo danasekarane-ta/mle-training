@@ -1,4 +1,4 @@
-name: Test the Housing Price Prediction Module installed or not
+name: Build the module locally and test it and see if it fails
 
 on:
   push:
