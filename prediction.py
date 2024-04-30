@@ -3,7 +3,6 @@ from src.housingPricePrediction.train_pkg import data_training
 from src.housingPricePrediction.score_pkg import logic_score
 
 
-
 def data_prediction():
     """ Fetch the data and Predict the modelling
     """
