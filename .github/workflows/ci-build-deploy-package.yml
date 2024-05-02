@@ -16,8 +16,8 @@ jobs:
       with:
         activate-environment: myenv
         python-version: '3.12.2'
-        environment-file: etc/env.yml
-        condarc-file: etc/.condarc
+        environment-file: deploy/env.yml
+        condarc-file: deploy/.condarc
         auto-activate-base: false
     - name: Flak38 lint
       uses:  py-actions/flake8@v2
@@ -49,4 +49,4 @@ jobs:
     - name: Show the installed packages
       run: pip freeze
     - name: Run the Python file
-      run: python -m housingPricePrediction.nonstandardcode
+      run: python -m prediction

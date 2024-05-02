@@ -20,7 +20,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev
-          environment-file: etc/env.yml
+          environment-file: deploy/env.yml
           auto-activate-base: false
 
       - name: Install Tree Cli
@@ -46,4 +46,4 @@ jobs:
           pip install dist/*.whl
       - name: Run the test case using Pytest
         run: |
-          pytest tests/test_packages.py
+          pytest tests/unit_tests/test_packages.py

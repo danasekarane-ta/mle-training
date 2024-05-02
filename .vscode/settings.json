@@ -1,0 +1,16 @@
+{
+    "python.defaultInterpreterPath": "/home/danaa/miniconda3/envs/myenv/bin/python",
+    "editor.formatOnSave": false,
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+    },
+    "flake8.args": [
+        "--max-line-length=79"
+    ],
+    "black-formatter.args": ["--line-length", "79"],
+    "isort.args" : ["--profile", "black", "--float-to-top"
+    ]
+}
