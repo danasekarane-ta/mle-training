@@ -31,10 +31,9 @@ jobs:
         run: |
           tree
 
-      - name: Run the test case using Pytest without local package this will fail
+      - name: Install the pytest
         run: |
             pip install -U pytest
-            pytest -v
 
       - name: Build Package Locally
         run: |
