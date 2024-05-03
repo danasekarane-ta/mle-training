@@ -3,7 +3,7 @@ name: Build the module locally and test it and see if it fails
 on:
   push:
     branches:
-      - fix/15/unit-testing
+      - main
 
 jobs:
   Test_Housing_Pricing:
