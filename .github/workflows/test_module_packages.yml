@@ -46,4 +46,4 @@ jobs:
           tree
       - name: Run the test case using Pytest
         run: |
-          pytest tests/unit_tests/test_packages.py
+          pytest -v

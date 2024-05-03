@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from housingPricePrediction.ingest_pkg import data_training
+from housingPricePrediction.train_pkg import data_training
 
 
 class TestTrainingModel(unittest.TestCase):
@@ -24,7 +24,7 @@ class TestTrainingModel(unittest.TestCase):
                                          labels=[1, 2, 3, 4])
 
         train_set, test_set, strain, stest = \
-            data_training.stratified_Shuffle_Split(self.data)
+            data_training.stratifiedShuffleSplit(self.data)
         self.assertGreaterEqual(len(set(strain)), 1)
         self.assertEqual(train_set.shape[0], 800)
         self.assertEqual(test_set.shape[0], 200)

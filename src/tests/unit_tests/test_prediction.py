@@ -3,7 +3,7 @@ import unittest
 
 import pandas as pd
 
-from housingPricePrediction import data_ingestion
+from housingPricePrediction.ingest_pkg import data_ingestion
 
 
 class TestDataIngestion(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestDataIngestion(unittest.TestCase):
                                      'households': [10, 20, 50],
                                      'total_bedrooms': [50, 100, 200],
                                      'population': [200, 500, 1000]})
-        self.housing = data_ingestion.feature_extraction(self.housing)
+        self.housing = data_ingestion.extract_features(self.housing)
         self.assertIn("population_per_household", self.housing.columns)
         self.assertListEqual(list(self.housing['rooms_per_household']),
                              [5, 5, 4])
@@ -25,7 +25,7 @@ class TestDataIngestion(unittest.TestCase):
                                      'median_house_value': [100, 200, 300],
                                      'ocean_proximity': ['Near Bay', 'Inland',
                                                          'NEAR OCEAN']})
-        data, _, X_prepared = data_ingestion.imputing_data(self.housing)
+        data, _, X_prepared = data_ingestion.impute_data(self.housing)
         self.assertEqual(X_prepared.shape, (3, 4))
         self.assertListEqual(list(X_prepared['total_rooms']),
                              [50.0, 125.0, 200.0])

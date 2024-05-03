@@ -13,7 +13,7 @@ def data_prediction():
 
     # train the data
     train_set, test_set, strat_train_set, strat_test_set = (
-        data_training.stratifiedShuffleSplit(housing)
+        data_training.ShuffleSplitstratified(housing)
     )
 
     # preprocess_data
