@@ -1,0 +1,128 @@
+name: Workflow scripts
+
+on:
+  pull_request:
+    branches:
+      - fix/17/workflow-scripts
+      - main
+
+jobs:
+  unittest_code:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+            activate-environment: myenv
+            python-version: '3.12.2'
+            environment-file: deploy/env.yml
+            condarc-file: deploy/.condarc
+            auto-activate-base: false
+
+      - name: Install the tree client
+        run: |
+          sudo apt install tree
+
+      - name: Show the folder structure before the build
+        run: |
+          tree .
+
+      - name: Install the Python package in dev mode
+        run: |
+            pip install -U pytest
+            pip install -e .
+
+
+      - name: Test using Pytest
+        run: |
+          pytest -v
+
+  build_Job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Conda setup
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+            activate-environment: myenv
+            python-version: '3.12.2'
+            environment-file: deploy/env.yml
+            condarc-file: deploy/.condarc
+            auto-activate-base: false
+
+      - name: Build Package
+        run: |
+          pip install --upgrade setuptools
+          pip install --upgrade build
+          python -m build
+          pip install -U pytest
+
+      - name: Install Package
+        run: |
+          pip install dist/*.whl
+
+      - name: Test using Pytest
+        run: |
+          pytest -v
+
+      - name: Upload Build artifact to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build_artifacts
+          path: dist/
+
+  deploy_job:
+    needs: [unittest_code, build_job]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Conda setup
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+            activate-environment: myenv
+            python-version: '3.12.2'
+            environment-file: deploy/env.yml
+            condarc-file: deploy/.condarc
+            auto-activate-base: false
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build_artifacts
+          path: dist/
+
+      - name: Install Package
+        run: |
+          pip install dist/*.whl
+
+      - name: Run scripts
+        run: |
+          python src/scripts/ingest_data.py -h
+          python src/scripts/ingest_data.py data
+          python src/scripts/train.py -h
+          python src/scripts/train.py data/processed .artifacts/models
+          python src/scripts/score.py -h
+          python src/scripts/score.py data/processed .artifacts/models .artifacts/scores
+
+
+      - name: Tree After executing
+        run: |
+          tree
+
+
