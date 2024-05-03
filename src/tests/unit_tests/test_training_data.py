@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from housePricePrediction import data_training
+from housingPricePrediction.ingest_pkg import data_training
 
 
 class TestTrainingModel(unittest.TestCase):

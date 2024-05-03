@@ -3,7 +3,7 @@ import unittest
 
 import pandas as pd
 
-from src.housingPricePrediction import data_ingestion
+from housingPricePrediction import data_ingestion
 
 
 class TestDataIngestion(unittest.TestCase):

@@ -2,8 +2,7 @@ import os
 import unittest
 
 import pandas as pd
-
-from housePricePrediction import data_ingestion
+from housingPricePrediction.ingest_pkg import data_ingestion
 
 
 class TestDataIngestion(unittest.TestCase):
