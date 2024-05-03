@@ -7,7 +7,7 @@ on:
       - fix/15/unit-testing
 
 jobs:
-  Test_Housing_Pricing:
+  Test_Module_Package:
     runs-on: ubuntu-latest
     defaults:
       run:

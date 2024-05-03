@@ -7,7 +7,7 @@ on:
       - fix/11/testing-code-with-pytest
 
 jobs:
-  Test_Housing_Pricing:
+  Test_Install_Package:
     runs-on: ubuntu-latest
     defaults:
       run:

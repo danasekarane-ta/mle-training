@@ -30,10 +30,6 @@ jobs:
         run: |
           tree
 
-      - name: Run the test case using Pytest
-        run: |
-            pytest -v
-
       - name: Build Package Locally
         run: |
             pip install -e .
