@@ -17,7 +17,7 @@ def ingest_input_data(output_folder):
     print("Data Loaded Successfully")
     # Train and Test split the data
     train_set, test_set, train, test = (
-        data_training.stratified_Shuffle_Split(housing)
+        data_training.stratifiedShuffleSplit(housing)
     )
     # Pre process the data
     housing, y_train, X_train = data_ingestion.impute_data(train)
