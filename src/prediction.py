@@ -1,6 +1,6 @@
-from src.housingPricePrediction.ingest_pkg import data_ingestion
-from src.housingPricePrediction.train_pkg import data_training
-from src.housingPricePrediction.score_pkg import logic_score
+from housingPricePrediction.ingest_pkg import data_ingestion
+from housingPricePrediction.train_pkg import data_training
+from housingPricePrediction.score_pkg import logic_score
 
 
 def data_prediction():
@@ -13,7 +13,7 @@ def data_prediction():
 
     # train the data
     train_set, test_set, strat_train_set, strat_test_set = (
-        data_training.stratifiedShuffleSplit(housing)
+        data_training.ShuffleSplitstratified(housing)
     )
 
     # preprocess_data

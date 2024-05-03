@@ -1,6 +1,9 @@
 name: Python Contious Integration and Deployment using Conda
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build-linux:
@@ -49,4 +52,4 @@ jobs:
     - name: Show the installed packages
       run: pip freeze
     - name: Run the Python file
-      run: python -m prediction
+      run: python -m  housingPricePrediction.prediction

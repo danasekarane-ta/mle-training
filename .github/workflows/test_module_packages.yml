@@ -1,13 +1,13 @@
-name: Test the Housing Price Prediction Module installed or not
+name: Test the Housing Price Prediction with the local package install version
 
 on:
   push:
     branches:
       - main
-      - fix/11/testing-code-with-pytest
+      - fix/15/unit-testing
 
 jobs:
-  Test_Install_Package:
+  Test_Module_Package:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -31,19 +31,17 @@ jobs:
         run: |
           tree
 
+      - name: Install the pytest
+        run: |
+            pip install -U pytest
+
       - name: Build Package Locally
         run: |
-          pip install --upgrade setuptools
-          pip install --upgrade build
-          pip install -U pytest
-          python -m build
+          pip install -e .
 
       - name: Tree after building the package
         run: |
           tree
-      - name: Install Package locally
-        run: |
-          pip install dist/*.whl
       - name: Run the test case using Pytest
         run: |
           pytest -v
