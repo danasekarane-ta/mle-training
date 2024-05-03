@@ -3,8 +3,8 @@ import os
 import pickle
 
 import pandas as pd
+from housingPricePrediction import data_training
 
-from housePricePrediction import data_training
 
 
 def model_training(input_path, output_path):
