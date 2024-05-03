@@ -14,7 +14,7 @@ def model_training(input_path, output_path):
         ).values.ravel()
 
     os.makedirs(output_path, exist_ok=True)
-    _, linear_model = data_training.train_data_regression(
+    _, linear_model = data_training.train_regression_data(
         "lin",
         housing_X,
         housing_y
@@ -22,7 +22,7 @@ def model_training(input_path, output_path):
     # Dump the model
     with open(output_path + "/linreg_model.pk", 'wb') as f:
         pickle.dump(linear_model, f)
-    _, dtree_model = data_training.train_data_regression("tree", housing_X,
+    _, dtree_model = data_training.train_regression_data("tree", housing_X,
                                                          housing_y)
     with open(output_path+"/decission_tree_model.pk", 'wb') as f:
         pickle.dump(dtree_model, f)

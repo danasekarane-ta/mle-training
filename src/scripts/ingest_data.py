@@ -21,12 +21,12 @@ def ingest_input_data(output_folder):
     )
     # Pre process the data
     housing, y_train, X_train = data_ingestion.impute_data(train)
-    X_train = data_ingestion.feature_extraction(X_train)
-    X_train = data_ingestion.creating_dummies(train, X_train)
+    X_train = data_ingestion.extract_features(X_train)
+    X_train = data_ingestion.create_dummy_data(train, X_train)
 
     housing, y_test, X_test = data_ingestion.impute_data(test)
-    X_test = data_ingestion.feature_extraction(X_test)
-    X_test = data_ingestion.creating_dummies(housing, X_test)
+    X_test = data_ingestion.extract_features(X_test)
+    X_test = data_ingestion.create_dummy_data(housing, X_test)
     print("Preprocessing done Successfully")
 
     # Save the output to the folder
