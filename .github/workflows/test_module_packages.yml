@@ -33,12 +33,11 @@ jobs:
 
       - name: Run the test case using Pytest without local package this will fail
         run: |
-            pip install pytest
-            pytest tests/unit_tests/test_packages.py
+            pip install -U pytest
+            pytest -v
 
       - name: Build Package Locally
         run: |
-
           pip install -e .
 
       - name: Tree after building the package
