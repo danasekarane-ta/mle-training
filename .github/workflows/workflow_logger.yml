@@ -69,12 +69,12 @@ jobs:
 
       - name: Run scripts
         run: |
-            python src/housingPricePrediction/ingest_data.py -h
-            python src/housingPricePrediction/ingest_data.py data
-            python src/housingPricePrediction/train.py -h
-            python src/housingPricePrediction/train.py data/processed .artifacts/models
-            python src/housingPricePrediction/score.py -h
-            python src/housingPricePrediction/score.py data/processed .artifacts/models .artifacts/scores
+            python src/housingPricePrediction/ingest_data/ingest_data.py -h
+            python src/housingPricePrediction/ingest_data/ingest_data.py data
+            python src/housingPricePrediction/train_pkg/train.py -h
+            python src/housingPricePrediction/train_pkg/train.py data/processed .artifacts/models
+            python src/housingPricePrediction/score_pkg/score.py -h
+            python src/housingPricePrediction/score_pkg/score.py data/processed .artifacts/models .artifacts/scores
 
       - name: Tree After executing
         run: |
