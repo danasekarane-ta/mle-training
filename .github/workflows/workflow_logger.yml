@@ -69,7 +69,6 @@ jobs:
 
       - name: Run scripts
         run: |
-            python -m housingPricePrediction.ingest_data -h
             python src/housingPricePrediction/ingest_data.py -h
             python src/housingPricePrediction/ingest_data.py data
             python src/housingPricePrediction/train.py -h
