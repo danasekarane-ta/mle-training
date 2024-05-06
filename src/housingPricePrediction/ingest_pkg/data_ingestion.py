@@ -1,5 +1,8 @@
 import os
 import tarfile
+import logging
+import logging.config
+
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,6 +14,11 @@ DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
+logging.config.fileConfig('logging.conf')
+
+# Add logger
+logger = logging.getLogger('mlExample')
+
 
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     """
@@ -20,6 +28,7 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     - housing_url (str): URL of the housing data.
     - housing_path (str): Local directory path to save the data.
     """
+    logger.info("Fetching the housing data")
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, "housing.tgz")
     urllib.request.urlretrieve(housing_url, tgz_path)
@@ -38,6 +47,7 @@ def load_housing_data(housing_path=HOUSING_PATH):
     Returns:
     - pd.DataFrame: DataFrame containing the housing data.
     """
+    logger.info("Loading the housing data")
     csv_path = os.path.join(housing_path, "housing.csv")
     housing = pd.read_csv(csv_path)
     housing["income_cat"] = pd.cut(
@@ -53,6 +63,7 @@ def income_cat_proportions(data):
 
 
 def preprocess_data(housing, X_strat, y_strat, y):
+    logger.info("Preprocessing of data started")
     compare_props = pd.DataFrame(
         {
             "Overall": income_cat_proportions(housing),
@@ -78,6 +89,7 @@ def data_visualization(housing):
      Parameters:
     - housing: Housing Dataset
     """
+    logger.info("Visualising the data")
     housing.plot(kind="scatter", x="longitude", y="latitude")
     housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
     plt.show()
@@ -118,6 +130,7 @@ def impute_data(X_train):
 
 
 def create_dummy_data(housing, X_prepared):
+    logger.debug("Creating dummy data")
     X_cat = housing[["ocean_proximity"]]
 
     X_prepared = X_prepared.join(pd.get_dummies(X_cat, drop_first=True))

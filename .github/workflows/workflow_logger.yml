@@ -1,0 +1,43 @@
+name: Testing the workflow logger
+
+on:
+  push:
+    branches:
+      - main
+      - fix/19/python-logging
+
+jobs:
+  Workflow_logger:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: mle-dev
+          environment-file: deploy/env.yml
+          auto-activate-base: false
+
+      - name: Install Tree Cli
+        run: |
+          sudo apt install tree
+
+      - name: Tree before building the package
+        run: |
+          tree
+
+      - name: Build Package Locally
+        run: |
+          pip install -e .
+
+      - name: Tree after building the package
+        run: |
+          tree
+      - name: Run the python module
+        run: |
+          python -m housingPricePrediction.prediction
