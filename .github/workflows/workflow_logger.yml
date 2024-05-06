@@ -1,13 +1,47 @@
-name: Testing the workflow logger
+name: Workflow Logger
 
 on:
-  push:
+  pull_request:
     branches:
       - main
       - fix/19/python-logging
 
 jobs:
-  Workflow_logger:
+  Build_Job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: myenv
+          environment-file: deploy/env.yml
+          auto-activate-base: false
+
+      - name: Build Package
+        run: |
+          pip install --upgrade setuptools
+          pip install --upgrade build
+          python -m build
+          pip install -U pytest
+
+      - name: Install Package
+        run: |
+          pip install dist/*.whl
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts_upload
+          path: dist/
+
+  Deploy_job:
+    needs: [Build_Job]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -20,24 +54,24 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev
-          environment-file: deploy/env.yml
+          environment-file: deploy/conda/env.yml
           auto-activate-base: false
 
-      - name: Install Tree Cli
-        run: |
-          sudo apt install tree
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifacts_upload
+          path: dist/
 
-      - name: Tree before building the package
+      - name: Install the downloaded artifacts
         run: |
-          tree
+          pip install dist/*.whl
 
-      - name: Build Package Locally
+      - name: Run scripts
         run: |
-          pip install -e .
-
-      - name: Tree after building the package
-        run: |
-          tree
-      - name: Run the python module
-        run: |
-          python -m housingPricePrediction.prediction
+          python scripts/ingestion.py -h
+          python scripts/ingestion.py data
+          python scripts/train.py -h
+          python scripts/train.py data/processed .artifacts/models
+          python scripts/score.py -h
+          python scripts/score.py data/processed .artifacts/models .artifacts/scores
