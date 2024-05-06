@@ -5,9 +5,6 @@ from housingPricePrediction.ingest_pkg import data_ingestion
 from housingPricePrediction.train_pkg import data_training
 from housingPricePrediction.score_pkg import logic_score
 
-
-logging.config.fileConfig("logging.conf")
-
 logger = logging.getLogger('mlExample')
 
 
