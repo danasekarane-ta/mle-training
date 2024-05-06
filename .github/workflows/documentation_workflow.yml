@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - fix/21/application-documenation
+  workflow_dispatch:
 
 jobs:
   document_build_job:
