@@ -75,3 +75,9 @@ jobs:
           python scripts/train.py data/processed .artifacts/models
           python scripts/score.py -h
           python scripts/score.py data/processed .artifacts/models .artifacts/scores
+
+      - name: Tree After executing
+        run: |
+          tree
+
+
