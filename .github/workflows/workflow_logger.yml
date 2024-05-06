@@ -69,12 +69,12 @@ jobs:
 
       - name: Run scripts
         run: |
-          python scripts/ingestion.py -h
-          python scripts/ingestion.py data
-          python scripts/train.py -h
-          python scripts/train.py data/processed .artifacts/models
-          python scripts/score.py -h
-          python scripts/score.py data/processed .artifacts/models .artifacts/scores
+            python src/scripts/ingest_data.py -h
+            python src/scripts/ingest_data.py data
+            python src/scripts/train.py -h
+            python src/scripts/train.py data/processed .artifacts/models
+            python src/scripts/score.py -h
+            python src/scripts/score.py data/processed .artifacts/models .artifacts/scores
 
       - name: Tree After executing
         run: |
