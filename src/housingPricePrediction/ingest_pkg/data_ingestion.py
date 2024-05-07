@@ -1,3 +1,4 @@
+import argparse
 import os
 import tarfile
 import logging
@@ -16,6 +17,25 @@ HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
 # Add logger
 logger = logging.getLogger('mlExample')
+
+# Add logger
+logger = logging.getLogger('mlExample')
+
+
+def setup_logger(log_level, log_path, write_to_console):
+    # Setup the logger configuration for the pipeline
+    logging.basicConfig(
+        filename=log_path,
+        level=log_level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # if write to_console is false, remove the default console handler
+    if not write_to_console:
+        # Add logger
+        logger = logging.getLogger('mlExample')
+        for handler in logger.handlers:
+            if isinstance(handler, logging.StreamHandler):
+                logger.removeHandler(handler)
 
 
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
@@ -133,3 +153,18 @@ def create_dummy_data(housing, X_prepared):
 
     X_prepared = X_prepared.join(pd.get_dummies(X_cat, drop_first=True))
     return X_prepared
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("ip_folder", help="Add path to ip folder(datasets)")
+    parser.add_argument("op_folder",
+                        help="Add path to op folder(pickle files)")
+    parser.add_argument("log_level", help="Logger log level")
+    parser.add_argument("log_path", help="Logger log path")
+    parser.add_argument("write_to_console",
+                        help="Flag to indicate to log to console or not")
+
+    args = parser.parse_args()
+
+    setup_logger(args.log_level, args.log_path, args.write_to_console)
