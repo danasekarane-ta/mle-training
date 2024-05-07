@@ -71,6 +71,8 @@ jobs:
         run: |
             python src/housingPricePrediction/ingest_pkg/data_ingestion.py -h
             python src/housingPricePrediction/ingest_pkg/data_ingestion.py data
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py data --log-level DEBUG --log-path ml
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py data --write-to-console
             python src/housingPricePrediction/train_pkg/data_training.py -h
             python src/housingPricePrediction/train_pkg/data_training.py data/processed .artifacts/models
             python src/housingPricePrediction/score_pkg/logic_score.py -h
