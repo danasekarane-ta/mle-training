@@ -1,0 +1,85 @@
+name: Workflow Logger
+
+on:
+  pull_request:
+    branches:
+      - main
+      - fix/19/python-logging
+
+jobs:
+  Build_Job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: myenv
+          environment-file: deploy/env.yml
+          auto-activate-base: false
+
+      - name: Build Package
+        run: |
+          pip install --upgrade setuptools
+          pip install --upgrade build
+          python -m build
+          pip install -U pytest
+
+      - name: Install Package
+        run: |
+          pip install dist/*.whl
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts_upload
+          path: dist/
+
+  Deploy_job:
+    needs: [Build_Job]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: mle-dev
+          environment-file: deploy/env.yml
+          auto-activate-base: false
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: artifacts_upload
+          path: dist/
+
+      - name: Install the downloaded artifacts
+        run: |
+          pip install dist/*.whl
+
+      - name: Run scripts
+        run: |
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py -h
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py data
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py data --log-level DEBUG --log-path mlapp.log
+            python src/housingPricePrediction/ingest_pkg/data_ingestion.py data --write-to-console
+            python src/housingPricePrediction/train_pkg/data_training.py -h
+            python src/housingPricePrediction/train_pkg/data_training.py data/processed .artifacts/models
+            python src/housingPricePrediction/score_pkg/logic_score.py -h
+            python src/housingPricePrediction/score_pkg/logic_score.py data/processed .artifacts/models .artifacts/scores
+
+      - name: Tree After executing
+        run: |
+          tree
+
+

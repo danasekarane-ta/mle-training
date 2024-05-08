@@ -1,11 +1,17 @@
+import logging
+import logging.config
+
 from housingPricePrediction.ingest_pkg import data_ingestion
 from housingPricePrediction.train_pkg import data_training
 from housingPricePrediction.score_pkg import logic_score
+
+logger = logging.getLogger('mlExample')
 
 
 def data_prediction():
     """ Fetch the data and Predict the modelling
     """
+    logger.info("Fetching the housing data for data prediction")
     # Fetch the data
     data_ingestion.fetch_housing_data()
     # Load the fetched data
@@ -16,6 +22,7 @@ def data_prediction():
         data_training.ShuffleSplitstratified(housing)
     )
 
+    logger.debug("Preprossing the fetched data")
     # preprocess_data
     data_ingestion.preprocess_data(
         housing, strat_train_set, strat_test_set, test_set
@@ -23,12 +30,12 @@ def data_prediction():
 
     # Data Visualiztion for train set
     housing_train = strat_train_set.copy()
-    print("Data Visualization for train set")
+    logger.info("Data Visualization for train set")
     data_ingestion.data_visualization(housing_train)
 
     # Data Visualiztion for test set
     housing_test = strat_train_set.copy()
-    print("Data Visualization for test set")
+    logger.info("Data Visualization for test set")
     data_ingestion.data_visualization(housing_test)
 
     # Feature Extraction for train set
@@ -69,19 +76,19 @@ def data_prediction():
         housing_X_train,
         housing_y_train
     )
-    print("Best Estimator", final_model_train_random)
+    logger.debug("Best Estimator", final_model_train_random)
     final_model_train_grid = data_training.cross_validation('GridSearchCV',
                                                             housing_X_train,
                                                             housing_y_train)
-    print("Best Estimator", final_model_train_grid)
+    logger.info("Best Estimator", final_model_train_grid)
 
     final_predictions_train = final_model_train_grid.predict(housing_X_train)
     final_rmse_train, final_mae_train = logic_score.logic_score(
         housing_y_train, final_predictions_train
     )
     # scoring for train set
-    print("Scoring for train-data: \n",
-          final_rmse_train, "   ", final_mae_train)
+    logger.debug("Scoring for train-data: \n",
+                 final_rmse_train, "   ", final_mae_train)
 
     # test using trained models
     final_predictions_test = final_model_train_grid.predict(housing_X_test)
@@ -89,7 +96,8 @@ def data_prediction():
         housing_y_test, final_predictions_test
     )
     # scoring for test set
-    print("Scoring for test-data: \n", final_rmse_test, "   ", final_mae_test)
+    logger.info("Scoring for test-data: \n", final_rmse_test, "   ",
+                final_mae_test)
 
 
 if __name__ == '__main__':

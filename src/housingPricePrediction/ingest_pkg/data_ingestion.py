@@ -1,5 +1,9 @@
+import argparse
 import os
 import tarfile
+import logging
+import logging.config
+
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,6 +15,28 @@ DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join("datasets", "housing")
 HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
 
+# Add logger
+logger = logging.getLogger('mlExample')
+
+# Add logger
+logger = logging.getLogger('mlExample')
+
+
+def setup_logger(log_level, log_path, write_to_console):
+    # Setup the logger configuration for the pipeline
+    logging.basicConfig(
+        filename=log_path,
+        level=log_level,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # if write to_console is false, remove the default console handler
+    if not write_to_console:
+        # Add logger
+        logger = logging.getLogger('mlExample')
+        for handler in logger.handlers:
+            if isinstance(handler, logging.StreamHandler):
+                logger.removeHandler(handler)
+
 
 def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     """
@@ -20,6 +46,7 @@ def fetch_housing_data(housing_url=HOUSING_URL, housing_path=HOUSING_PATH):
     - housing_url (str): URL of the housing data.
     - housing_path (str): Local directory path to save the data.
     """
+    logger.info("Fetching the housing data")
     os.makedirs(housing_path, exist_ok=True)
     tgz_path = os.path.join(housing_path, "housing.tgz")
     urllib.request.urlretrieve(housing_url, tgz_path)
@@ -38,6 +65,7 @@ def load_housing_data(housing_path=HOUSING_PATH):
     Returns:
     - pd.DataFrame: DataFrame containing the housing data.
     """
+    logger.info("Loading the housing data")
     csv_path = os.path.join(housing_path, "housing.csv")
     housing = pd.read_csv(csv_path)
     housing["income_cat"] = pd.cut(
@@ -53,6 +81,7 @@ def income_cat_proportions(data):
 
 
 def preprocess_data(housing, X_strat, y_strat, y):
+    logger.info("Preprocessing of data started")
     compare_props = pd.DataFrame(
         {
             "Overall": income_cat_proportions(housing),
@@ -78,6 +107,7 @@ def data_visualization(housing):
      Parameters:
     - housing: Housing Dataset
     """
+    logger.info("Visualising the data")
     housing.plot(kind="scatter", x="longitude", y="latitude")
     housing.plot(kind="scatter", x="longitude", y="latitude", alpha=0.1)
     plt.show()
@@ -118,7 +148,23 @@ def impute_data(X_train):
 
 
 def create_dummy_data(housing, X_prepared):
+    logger.debug("Creating dummy data")
     X_cat = housing[["ocean_proximity"]]
 
     X_prepared = X_prepared.join(pd.get_dummies(X_cat, drop_first=True))
     return X_prepared
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("ip_folder", help="Add path to ip folder(datasets)")
+    parser.add_argument("op_folder",
+                        help="Add path to op folder(pickle files)")
+    parser.add_argument("log_level", help="Logger log level")
+    parser.add_argument("log_path", help="Logger log path")
+    parser.add_argument("write_to_console",
+                        help="Flag to indicate to log to console or not")
+
+    args = parser.parse_args()
+
+    setup_logger(args.log_level, args.log_path, args.write_to_console)
