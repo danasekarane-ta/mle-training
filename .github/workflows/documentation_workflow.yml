@@ -1,0 +1,56 @@
+name: Documenation workflow for python application
+
+on:
+  pull_request:
+    branches:
+      - main
+      - fix/21/application-documenation
+  workflow_dispatch:
+
+jobs:
+  document_build_job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: mle-dev
+          environment-file: deploy/env.yml
+          auto-activate-base: false
+
+      - name: Install Tree Client
+        run: |
+          sudo apt install tree
+
+      - name: Show the Tree before build
+        run: |
+          tree
+
+      - name: Install Package in dev mode
+        run: |
+          pip install -e .
+
+      - name: Build docs using sphinx framework
+        run: |
+          cd docs
+          sphinx-apidoc -o docs ../src/housingPricePrediction/
+          make html
+          cd ..
+
+      - name: Show the tree after build
+        run: |
+          tree
+
+      - name: Upload the build docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs_artifacts
+          path: docs/_build/html/
+
+
