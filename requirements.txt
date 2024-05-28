@@ -1,0 +1,8 @@
+setuptools
+build
+pandas
+numpy
+matplotlib
+scikit-learn
+pytest
+mlflow
