@@ -13,9 +13,11 @@ RUN echo "source activate myenv" > ~/.bashrc
 ENV PATH /opt/conda/envs/myenv/bin:$PATH
 
 COPY . /app
-WORKDIR /app/mlflow-learning/
+WORKDIR /app/mlflow-learning
 
 ENV MLFLOW_TRACKING_URI=http://localhost:5008
 EXPOSE 5008
 
-CMD python mlflow_prediction.py && mlflow server --host 0.0.0.0
+
+CMD [ "/bin/sh", "-c", "mlflow server --backend-store-uri mlruns/ --default-artifact-root mlruns/ --host 0.0.0.0 --port 5008 \
+    && python3 mlflow_prediction.py"]
