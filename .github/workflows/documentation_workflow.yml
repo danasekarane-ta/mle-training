@@ -3,7 +3,6 @@ name: Documenation workflow for python application
 on:
   pull_request:
     branches:
-      - main
       - fix/21/application-documenation
   workflow_dispatch:
 
