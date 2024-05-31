@@ -2,7 +2,6 @@ name: Continous deployments with github and docker
 on:
   push:
     branches:
-      - 'main'
       - fix/27/docker-learning
   workflow_dispatch:
 
