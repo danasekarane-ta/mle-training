@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy the env file
 COPY deploy/conda/env.yml /app
 
-RUN conda env create -f /app/env.yml
+RUN conda env create -f /app/deploy/conda/env.yml
 
 # Activate the new environment
 RUN echo "source activate myenv" > ~/.bashrc
