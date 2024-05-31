@@ -28,3 +28,10 @@ jobs:
 
       - name: Run the pulled image
         run : docker run -d -p 8080:5008 --name mlflowlearning danasekaraneta/mlflowlearning:github-latest
+
+      - name: Debug the application
+        run: |
+          echo "Waiting for the app to start..."
+          sleep 100
+          echo "Checking the application's health..."
+          curl http://localhost:8080
