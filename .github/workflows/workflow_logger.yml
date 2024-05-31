@@ -3,7 +3,6 @@ name: Workflow Logger
 on:
   pull_request:
     branches:
-      - main
       - fix/19/python-logging
 
 jobs:

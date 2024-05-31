@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - fix/17/workflow-scripts
-      - main
 
 jobs:
   unittest_code:

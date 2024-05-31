@@ -3,7 +3,6 @@ name: Test the Housing Price Prediction with the local package install version
 on:
   push:
     branches:
-      - main
       - fix/15/unit-testing
 
 jobs:

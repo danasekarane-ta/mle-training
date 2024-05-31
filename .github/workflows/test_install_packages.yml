@@ -3,7 +3,6 @@ name: Test the Housing Price Prediction Module installed or not
 on:
   push:
     branches:
-      - main
       - fix/11/testing-code-with-pytest
 
 jobs:
