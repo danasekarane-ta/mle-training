@@ -27,4 +27,4 @@ jobs:
         run: docker pull danasekaraneta/mlflowlearning:github-latest
 
       - name: Run the pulled image
-        run : docker run -d -p 8080:5008 -name mlflowlearning danasekaraneta/mlflowlearning:github-latest
+        run : docker run -d -p 8080:5008 --name mlflowlearning danasekaraneta/mlflowlearning:github-latest
