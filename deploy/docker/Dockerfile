@@ -5,6 +5,8 @@ WORKDIR /app
 
 COPY . /app
 
+RUN ls
+
 RUN conda env create -f /app/deploy/conda/env.yml
 
 # Activate the new environment
