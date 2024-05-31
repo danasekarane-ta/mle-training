@@ -4,6 +4,8 @@ on:
     branches:
       - 'main'
       - fix/27/docker-learning
+  workflow_dispatch:
+
 jobs:
   docker:
     runs-on: ubuntu-latest
