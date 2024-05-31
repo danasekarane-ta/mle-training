@@ -7,7 +7,7 @@ COPY . /app
 
 RUN ls
 
-RUN conda env create -f /app/deploy/conda/env.yml
+RUN conda env create -f /app/mlflow-learning/deploy/conda/env.yml
 
 # Activate the new environment
 RUN echo "source activate myenv" > ~/.bashrc
