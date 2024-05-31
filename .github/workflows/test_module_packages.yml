@@ -20,7 +20,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev
-          environment-file: deploy/env.yml
+          environment-file: deploy/conda/env.yml
           auto-activate-base: false
 
       - name: Install Tree Cli

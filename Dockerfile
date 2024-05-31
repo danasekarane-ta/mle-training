@@ -4,7 +4,7 @@ FROM continuumio/miniconda3
 WORKDIR /app
 
 # Copy the env file
-COPY deploy/env.yml /app
+COPY deploy/conda/env.yml /app
 
 RUN conda env create -f /app/env.yml
 

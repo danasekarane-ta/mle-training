@@ -26,6 +26,6 @@ jobs:
       - name: Build and push the file using DockerFile
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: deploy/docker
           push: true
           tags: danasekaraneta/mlflowlearning:github-latest
