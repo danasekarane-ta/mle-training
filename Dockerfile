@@ -20,4 +20,4 @@ EXPOSE 5008
 
 
 CMD [ "/bin/sh", "-c", "mlflow server --backend-store-uri mlruns/ --default-artifact-root mlruns/ --host 0.0.0.0 --port 5008 \
-    && python3 mlflow_prediction.py"]
+    & python3 mlflow_prediction.py"]
