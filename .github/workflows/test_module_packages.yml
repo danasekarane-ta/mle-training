@@ -3,7 +3,6 @@ name: Test the Housing Price Prediction with the local package install version
 on:
   push:
     branches:
-      - main
       - fix/15/unit-testing
 
 jobs:
@@ -20,7 +19,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev
-          environment-file: deploy/env.yml
+          environment-file: deploy/conda/env.yml
           auto-activate-base: false
 
       - name: Install Tree Cli

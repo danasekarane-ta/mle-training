@@ -3,7 +3,6 @@ name: Workflow Logger
 on:
   pull_request:
     branches:
-      - main
       - fix/19/python-logging
 
 jobs:
@@ -20,7 +19,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: myenv
-          environment-file: deploy/env.yml
+          environment-file: deploy/conda/env.yml
           auto-activate-base: false
 
       - name: Build Package
@@ -54,7 +53,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: mle-dev
-          environment-file: deploy/env.yml
+          environment-file: deploy/conda/env.yml
           auto-activate-base: false
 
       - name: Download artifact

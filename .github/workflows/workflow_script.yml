@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - fix/17/workflow-scripts
-      - main
 
 jobs:
   unittest_code:
@@ -21,7 +20,7 @@ jobs:
         with:
             activate-environment: myenv
             python-version: '3.12.2'
-            environment-file: deploy/env.yml
+            environment-file: deploy/conda/env.yml
             condarc-file: deploy/.condarc
             auto-activate-base: false
 
@@ -57,7 +56,7 @@ jobs:
         with:
             activate-environment: myenv
             python-version: '3.12.2'
-            environment-file: deploy/env.yml
+            environment-file: deploy/conda/env.yml
             condarc-file: deploy/.condarc
             auto-activate-base: false
 
@@ -97,7 +96,7 @@ jobs:
         with:
             activate-environment: myenv
             python-version: '3.12.2'
-            environment-file: deploy/env.yml
+            environment-file: deploy/conda/env.yml
             condarc-file: deploy/.condarc
             auto-activate-base: false
 
